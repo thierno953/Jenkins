@@ -2,6 +2,17 @@
 
 - Jenkins is an open-source automation tool written in java with plugins built for continuous integration. Jenkins is used to build and test your software projects continuously making it easier for developers to integrate changes to the project, and making it easier for users to obtain a fresh build. It also allows you to continuously deliver your sofware by integrating with a large number of testing and deployment technologies.
 
+- CI/CD is a method to frequently delivery apps to costomers by introducing automation in the stages of continuous delivery, and continuous deployment. CI/CD is a solution to the problems integrating new code can cause for development and operations teams (AKA "integration hell")
+
+```bash
+------------------------------------|-----------------------------------------------|-------------------------------
+Continuous Integration              |                Continuous Delivery            |        Continuous Deployement
+------------------------------------|-----------------------------------------------|------------------------------
+Build ==> Test ==> Merge        ====|====>           Automatically Release     =====|==>      Automatically Deploy
+                                    |                To Repository                  |          To Production
+------------------------------------|-----------------------------------------------|--------------------------------
+```
+
 - Jenkins Standalone Architecture
 
 ```bash
