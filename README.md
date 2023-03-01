@@ -95,3 +95,28 @@ pipeline {
 ## Multi-Branch Pipeline
 
 - A multi-branch pipeline is an extension of a Pipeline Job. However, it has a way of automatically creating Jenkins pipelines based on source control branches. Jenkins can then automatically discover new branches in the source control, and it can also automatically create a pipeline for that branch.
+
+## Parameterized Jobs
+
+- A build parameter allows us to pass data into our Jenkisn jobs. Using build parameters, we can pass any data we want: git branch name, secret credentials, hostnames and ports, and so on.
+- Any Jenkins job or pipeline can be parameterized. All we need to do is check the box on the General settings tab, **This project is parameterized :**
+
+## Parameterized Jobs Continued...
+
+- **Type:** the data type for the parameter (string, boolean, etc.).
+- **Name:** the name identifying the parameter.
+- **Default value:** an optional value that will be used when a user doesn't specify one.
+- **Description:** optional text that describes how the parameter is used.
+- A single Jenkins job or pipeline can have multiple parameters. The only restriction is that the parameter name must be unique.
+
+## Types of Parameters
+
+Jenkins supports several parameter types. Bellow is a list of the most common ones, but keep in mind that different plugins may add new parameter types:
+
+- **String:** any combination of characters and numbers.
+- **Choice:** a pre-defined set of strings from which a user can pick a value.
+- **Credentials:** a pre-defined Jenkins credential.
+- **File:** the full path to a file on the filesystem.
+- **Multi-line String:** same as String, but allows newline characters.
+- **Password:** similar to the Credentials type, but allows us to pass a plain text parameter specific to the job or pipeline.
+- **Run:** an absolute URL to a single run of another job.
