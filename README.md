@@ -120,3 +120,43 @@ Jenkins supports several parameter types. Bellow is a list of the most common on
 - **Multi-line String:** same as String, but allows newline characters.
 - **Password:** similar to the Credentials type, but allows us to pass a plain text parameter specific to the job or pipeline.
 - **Run:** an absolute URL to a single run of another job.
+
+## Jenkins pipeline
+
+- Pipeline can be run in a loop
+- It supports larger projects that may involve a high CPU job, provided the Jenkins infrastructure is scalable enough to support it.
+- Since Jenkins is written in code, any number of users can use it as a template, modify it and run customized tests and processes.
+- Multiple jobs can be run in parallel.
+- Jenkins Pipeline is robust. Pipeline can automatically be resumed from it might have stopped for any reason.
+
+## Understanding the pipeline
+
+- **Pipeline** : A user-defined block, which contains all the processes such as **build**, **test**, **deploy**, etc. All the stage and steps are defined in this block.
+- **Node** : The node is machine on which Jenkins runs. A node block is used in scripted pipeline syntax.
+- **Stage** : This block contains a series of steps in a pipeline. i.e., **build**, **test**, **deploy** processes on a stage.
+
+## Multiple Stages in Jenkins pipeline
+
+```bash
+pipeline {
+   agent any
+
+   stages {
+      stage('build') {
+         steps {
+            echo 'Hello build stage'
+         }
+      }
+      stage('test') {
+         steps {
+            echo 'Hello test stage'
+         }
+      }
+      stage('deploy') {
+         steps {
+            echo 'Hello deploy stage'
+         }
+      }
+   }
+}
+```
