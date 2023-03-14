@@ -161,7 +161,7 @@ pipeline {
 }
 ```
 
-## Pipeline COntinued...
+## Pipeline Continued...
 
 - **stages:**
 
@@ -284,5 +284,64 @@ environment {
 ```bash
 tools {
    gradle "gradle3.2"
+}
+```
+
+- **Triggers**
+
+* This directive allows you to specfify what kind of triggers should initiate builds in your pipeline. Note that these do not apply to Multibranch Pipeline or Github organization or Bitbucket team/project jobs that are market by Jenkinsfile and triggered otherwise-such as by a webhook that notifies Jenkins when a change is made.
+* There are four different (SCM-neutral) triggers currently available: **cron**, **pollSCM**, **upstream**, and **githubPush**.
+
+* **Cron**
+
+```bash
+// Start a pipeline execution at 10 minutes past the hour
+triggers { cron(10 * * * * ) }
+
+// Scan for SCM changes at 10-minute intervals
+triggers { pollSCM(*/10 * * * * ) }
+
+// Start a pipeline session at some point between 0 and 30 minutes after the hour
+triggers { cron(H(0,30) * * * * ) }
+
+// Start a pipeline execution at 8 a.m Monday through Friday
+triggers { cron(0 8 * * * 1-5 ) }
+```
+
+- **Paramters**
+
+* The Paramters directive provides a list of parameters that a user should provide when triggering the Pipeline. The values for these user-specified parameters are made available to Pipeline steps via the params object, see the parameters, Declarativ Pipeline for its specific usage.
+* Each parameter has a Name and value, depending on the parameter type. This information is exported as environment variables when the build starts, allowing subsequent ports of the build configuration to access those values. For example, this can be performed by using the {PARAMETER_NAME} syntax (or %PARAMETER_NAME% on Windows)
+
+* **Available Paramters**
+* **string**: A parameter of a string type, for example: parameters { string(name: 'DEPLOY_EN', defaultValue: "staging", description: "")}
+* **text**: A text parameter, which can contain multiple lines, for example: parameters { text(name: "DEPLOY_TEXT", defaultValue: "One\nTwo\nThree\n", description: "")}
+* **booleanParam**: A boolean parameter, for example: parameter {booleanParam(name: "DEBUG_BUILD", defaultValue: true, description: "")}
+* **choice** : A choice parameter, for example: parameters { choice(name: "CHOICES", choices: ["one", "two", "three"], description: "")}
+* **password** : A password parameter, for example: parameters { password(name: "PASSWORD", defaultValue: "SECRET", description: "A secret password" )}
+
+* **Paramters example**
+
+```bash
+pipeline {
+   agent any
+   parameters {
+      string(name: "PERSON", default: "Mr Jenkins", description: "Who should I say hello to?)
+      text(name: "BIOGRAPHY")
+      booleanParam(name: "TOGGLE")
+      choice(name: "CHOICE")
+      password(name: "PASSWORD")
+   }
+   stages {
+      stage("Example") {
+         steps {
+            echo "Hello ${params.PERSON}"
+            echo "Biolography: ${params.BIOGRAPHY}"
+            echo "Toggle: ${params.TOGGLE}"
+            echo "Choice: ${params.CHOICE}"
+            echo "Password: ${params.PASSWORD}"
+         }
+      }
+   }
 }
 ```
