@@ -160,3 +160,129 @@ pipeline {
    }
 }
 ```
+
+## Pipeline COntinued...
+
+- **stages:**
+
+* This section wraps all of the individual stage definitions(directives) that define the main body and logic for the pipeline.
+
+- **steps:**
+
+* This section wraps a set of DSL steps within a stage definition. It services to separate the collection of steps from other items within a stage, such as environment definitions.
+
+* **posts:**
+
+* This section wraps around steps and conditions to be done or checked at the end of a pipeline run or at the end of a stage.
+
+#### Pipeline Example
+
+```bash
+pipeline {
+   agent any
+
+   stages {
+      stage('name1') {
+         steps {
+            ---
+         }
+         post {
+            ---
+         }
+      }
+      stage('name2') {
+         steps {
+            ---
+         }
+      }
+   }
+   post {
+      ---
+   }
+}
+```
+
+- **Directives**
+
+* A directive can be thought of as a statement or block of code that does any of the following in a pipeline.
+
+* Definies values (worker)
+* Configures behavior {cron(070015)}
+* Specifies actions to be done (DSL)
+
+- **Step**
+
+* The label steps itself is a section title with in a stage of the pipeline. However, within the section, we can have any valid DSL statement, such as git, sh, echo, etc. You can think of a step here as corresponding to one of these statements.
+* **Conditionals** : Conditionals supply a condition or criteria under which an action should occur. These are optional. There are two cases you may encounter/use.
+
+- **When** : Strictly speaking, this is a directive. It resides within a stage definition and defines criteria for whether or not a stage should be executed. For example:
+
+```bash
+stage ('build') {
+   when {
+      branch 'foo'
+   }
+   <steps>
+}
+```
+
+- Conditionals blocks in the post section that define the criteria for doing post-processing. The criteria (conditions) here refer to the status of the build, such as success or failure.
+
+```bash
+pipeline
+   agent
+   environment
+   tools
+   options
+   triggers
+   parameters
+   libraries
+   stages
+
+         stage
+             agent
+             environment
+             tools
+             steps
+                 DSL statements
+             post
+
+         stage
+             ---
+
+   post
+```
+
+- **Pipeline**
+
+* The pipeline block is required in a jenkins Declarative Pipeline. It is the outermost section and signals that this is a Pipeline project. The syntax is simple pipeline {} with the rest of the code within the closure:
+
+```bash
+pipeline {
+   // pipeline code
+}
+```
+
+- **agent any** : This syntax tells Jenkins that the pipeline or stage can run on any agent that is definied, without regard to what label it has.
+- **agent none** : When used at the top level, this indicates that we are not specifying and agent globally for the pipeline. The implication is that an agent will be specified, if needed, for individual stages.
+
+- **agent {label "<label>"}** : This indicates that the pipeline or stage can run on any agent that has the label <label>.
+
+* **Enivironment**
+* Jenkins Enivironment Variable is a global variable exposed through the env variable and used anywhere in the Jenkins file. Any value stored in the env variable gets stored as a String type. Enivironment Variables can be set either at the pipeline top level, at the specific stage level, or inside the script block.
+
+```bash
+environment {
+         TIMEZONE = "eastern"
+         TIMEZONE_DS = "${TIMEZONE}_dayligth_savings"
+}
+```
+
+- **Tools**
+- Jenkins users are familiar with using the Global Tool Configuration screen to configuration versions, paths, and installers for tools. Once configured there, the tools directive allows use to specify which of these we want to have auto-installed and made available in the path on the agent we've chosen.
+
+```bash
+tools {
+   gradle "gradle3.2"
+}
+```
